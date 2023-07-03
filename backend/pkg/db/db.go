@@ -1,13 +1,23 @@
 package db
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
-	"github.com/gofiber/storage/postgres/v2"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-func Setup() *postgres.Storage {
+type SqlStore struct {
+	*gorm.DB
+}
+
+func NewSqlStore() *SqlStore {
+	return &SqlStore{setup()}
+}
+
+func setup() *gorm.DB {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
 		panic("DB_HOST is not set")
@@ -27,11 +37,6 @@ func Setup() *postgres.Storage {
 		panic("DB_NAME is not set")
 	}
 
-	table := os.Getenv("DB_TABLE")
-	if table == "" {
-		panic("DB_TABLE is not set")
-	}
-
 	port_str := os.Getenv("DB_PORT")
 	if port_str == "" {
 		panic("DB_PORT is not set")
@@ -46,16 +51,8 @@ func Setup() *postgres.Storage {
 	if sslmode == "" {
 		panic("DB_SSLMODE is not set")
 	}
+	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=%s", host, user, password, dbname, port, sslmode)
+	db, _ := gorm.Open(postgres.Open(dns), &gorm.Config{})
+	return db
 
-	cfg := postgres.Config{
-		Host:     host,
-		Port:     port,
-		Username: user,
-		Password: password,
-		Database: dbname,
-		SSLMode:  sslmode,
-		Table:    table,
-	}
-	store := postgres.New(cfg)
-	return store
 }
