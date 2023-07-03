@@ -37,6 +37,7 @@ func NewServer(db *db.SqlStore) *Server {
 	v1 := app.Group("/api/v1")
 
 	routes.SetupLinksRoutes(v1, db)
+    v1.Get("/r", routes.Redirect(db))
 
 	return &Server{
 		App:  app,
