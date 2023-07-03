@@ -1,6 +1,10 @@
 package types
 
-import "time"
+import (
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 type Link struct {
     ID uint64 `json:"id" gorm:"primary_key"`
@@ -9,4 +13,10 @@ type Link struct {
     Count uint64 `json:"count" gorm:"not null"`
     CreatedAt time.Time `json:"created_at" gorm:"not null default CURRENT_TIMESTAMP"`
     UpdatedAt time.Time `json:"updated_at" gorm:"not null default CURRENT_TIMESTAMP "`
+}
+
+type APISever struct {
+    * fiber.App
+    Port string
+    Host string
 }
