@@ -14,9 +14,17 @@ func SetupLinksRoutes(app fiber.Router, db *db.SqlStore) {
 	links.Delete("/:id", deleteLink(db))
 }
 
-func getLinks(db *db.SqlStore) func(*fiber.Ctx) error {
-	return func(c *fiber.Ctx) error {
-		return c.SendString("getLinks")
+func getLinks(db *db.SqlStore) func(c *fiber.Ctx) error {
+
+	response := &ApiResponse{
+		Code:  fiber.StatusOK,
+		Msg:   "Links retrieved successfully",
+		Error: true,
+		Data:  nil,
+	}
+	return func(c *fiber.Ctx) error { // return of the function is a fiber handler
+		return c.JSON(response)// return of the handler is an error
+
 	}
 }
 

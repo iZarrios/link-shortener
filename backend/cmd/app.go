@@ -18,7 +18,11 @@ type Server struct {
 }
 
 func NewServer(db *db.SqlStore) *Server {
-	app := fiber.New()
+    cfg := fiber.Config{
+        DisableStartupMessage: false,
+        Prefork:               false,
+    }
+	app := fiber.New(cfg)
 
 	app.Use(helmet.New())
 	app.Use(cors.New())
