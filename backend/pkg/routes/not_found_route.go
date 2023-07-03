@@ -7,7 +7,6 @@ func NotFoundRoute(c *fiber.Ctx) error {
     response := &ApiResponse {
         Code: fiber.StatusNotFound,
         Msg: "endpoint is not found",
-        Error: true,
         Data: nil,
     }
     return c.JSON(response)
