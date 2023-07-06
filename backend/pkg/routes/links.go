@@ -13,7 +13,7 @@ func SetupLinksRoutes(app fiber.Router, db *db.SqlStore) {
 	links.Get("/", getLinks(db))
 	links.Post("/", createLink(db))
 	links.Get("/:id", getLink(db))
-	// links.Put("/:id", updateLink(db))
+
 	links.Delete("/:id", deleteLink(db))
 }
 
@@ -45,7 +45,7 @@ func createLink(db *db.SqlStore) func(*fiber.Ctx) error {
 		Url: "",
 		// Redirect: fmt.Sprintf("localhost:%s/%s", os.Getenv("API_PORT"), shortUrl),
 		Redirect: shortUrl,
-		Count:    0,
+		NumberOfVisits:    0,
 	}
 
 	return func(c *fiber.Ctx) error {

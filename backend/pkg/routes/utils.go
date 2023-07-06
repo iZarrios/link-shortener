@@ -3,9 +3,9 @@ package routes
 import "math/rand"
 
 type ApiResponse struct {
-	Code  int         `json:"code"`
-	Msg   string      `json:"msg"`
-	Data  interface{} `json:"data"`
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
 }
 
 func RandomURL(size int) string {
