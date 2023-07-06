@@ -26,22 +26,17 @@ func main() {
 
 	if *toMigrate {
 		fmt.Println("Migrating...")
+
 		// add new types here
-		/////////////////////////
 		types := []interface{}{
 			&types.Link{},
 		}
-		/////////////////////////
+
 		db.AutoMigrate(types...)
 		fmt.Println("Migration complete")
 	}
 
 	app := NewServer(db)
-    // setting up routes
-	// swagger
-	// public
-	// private
-	// not found
 	app.Use(routes.NotFoundRoute)
 
 	app.Listen(fmt.Sprintf("%s:%s", app.Host, app.Port))
